@@ -8,7 +8,7 @@ namespace Calculator.test
     {
 
         [Test]
-        public void All_Unvalid_Data_Test()
+        public void All_Invalid_Data_Test()
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "http://localhost:64177/Login";
@@ -21,5 +21,23 @@ namespace Calculator.test
             Assert.AreEqual("'Test' user doesn't exist!", actualError);
             driver.Quit();
         }
+
+        [Test]
+        public void Invalid_Password_Data_Test()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "http://localhost:64177/Login";
+            driver.FindElement(By.Id("login")).SendKeys("test");
+            driver.FindElement(By.Id("password")).SendKeys("NewYork1");
+            driver.FindElements(By.Id("login"))[1].Click();
+
+            string actualError = driver.FindElement(By.Id("errorMessage")).Text;
+
+            Assert.AreEqual("Incorrect password!", actualError);
+            driver.Quit();
+        }
+
     }
+
+
 }
